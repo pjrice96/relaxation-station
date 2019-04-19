@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<!--
+<html ng-app="mboc"> 
+-->
+<html> 
+    <head> 
+        <title>{% block page_title %}Dispatch Optimizer{% end %}</title> 
+        <base href="{% raw base_url or '/' %}">
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+        <style type="text/css"> 
+            .z100 { z-index: 100; }
+            .z50 { z-index: 50; } 
+            .z25 { z-index: 25; } 
+            .invisible { visibility: hidden; }
+            .inner { position: absolute; width:971px; height:780px; background:white; }
+            .inner-stacked-2 { width:971px; height:390px; background:white; }
+            .inner-stacked-3 { width:971px; height:260px; background:white; }
+            .inner-stacked-4 { width:971px; height:195px; background:white; }
+            .inner-stacked-4div2 { width:971px; height:39px; background:white; }
+            .inline-blocks{ display:inline-block; vertical-align: top; /* here */ }
+            .inner-lined-2-3 { height: 100%; width:800px; display:inline-block; vertical-align: top; }
+            .inner-lined-1-3 { /* width:323px; */ height: 100%; width:320px; display:inline-block; vertical-align: top; }
+            .table_tight td { background:red; }
+            .table_tight td input { margin-left: 0px; margin-right: 0px; }
+            .col-2 { width:50%; height:780px; }
+            .col-2-stacked-3 { width:479px; height:260px; }
+            .col-2-stacked-5 { width:479px; height:156px; }
+            .col-2-stacked-75px { width:479px; height:75px; }
+            .centerinner { margin: 0 auto; }
+            .gauge { width:65px; height: 104px; }
+            .instruct { margin-top: 5px; } 
+
+            body{ background-color: #e1e2e5!important; font-family: "ge-inspira", "Helvetica Neue", Helvetica, Arial, sans-serif !important; } 
+
+            @media (min-width: 1200px) {
+                .container { width: 100%; margin-left: 0px; margin-right: 0px; } 
+                .span9 { width: 915px; }
+            }
+
+            @media (max-width: 979px) {
+                .hideMenu{margin-top: -1.7%;height:0px!important;}
+                .navbar-toggle {display:block!important;background-color: black!important;border-color: grey!important;}
+                .showMenu {margin-top: -2.7%!important;overflow: visible !important;}}.navbar-toggle .icon-bar {background-color: grey;}.navbar-toggle{display:none;} 
+                .showMenu{margin-top: -1.7%;}
+                .showMenu div{background-color: #3f4145;}
+                .hideMenu{margin-top: -1.7%;height:40px;}
+                #fadeBg{background-color: transparent!important;} 
+                .btn{font-family:"ge-inspira", "Helvetica Neue", Helvetica, Arial, sans-serif !important} 
+
+                .highcharts-title,
+                  .highcharts-title tspan,
+                  .highcharts-subtitle tspan,
+                  .highcharts-yaxis-title tspan,
+                  .highcharts-yaxis-labels,
+                  .highcharts-xaxis-labels text,
+                  .highcharts-legend-item text,
+                  .highcharts-tooltip {
+                      font-family: "ge-inspira", "Helvetica Neue", Helvetica, Arial, sans-serif!important;
+                  }
+      </style>
+
+      <script type='text/javascript' src='/do-res/jquery/jquery-1.9.1.js'></script>
+
+      <script type="text/javascript" src="/do-res/bower_components/angular/angular.js"></script>
+      <script type="text/javascript" src="/do-res/bower_components/angular-route/angular-route.js"></script>
+      <script type="text/javascript" src="/do-res/bower_components/angular-resource/angular-resource.js"></script>
+
+
+      <script type="text/javascript" src="/do-res/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+      <script type="text/javascript" src="/do-res/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+      <script src="/do-res/iidx-2.0.3/dist-2.0.3/components/bootstrap/js/bootstrap-tooltip.js"></script>
+      <script src="/do-res/iidx-2.0.3/dist-2.0.3/components/bootstrap/js/bootstrap-popover.js"></script>
+      <script src="/do-res/iidx-2.0.3/dist-2.0.3/components/bootstrap/js/bootstrap-transition.js"></script>
+      <script src="/do-res/iidx-2.0.3/dist-2.0.3/components/bootstrap/js/bootstrap-collapse.js"> </script>
+
+      <link href="/do-res/css/datepicker.css" rel="stylesheet" type="text/css">
+
+      <script src="/do-res/js/utils/datepicker.js"></script>
+      <script src="/do-res/js/utils/datepicker.en.js"></script>
+
+      <script src="/do-res/highcharts/highcharts.js"></script>
+      <script src="/do-res/highcharts/exporting.js"></script>
+      <script src="/do-res/highcharts/highcharts-more.js"></script>
+
+      <script language="javascript" type="text/javascript" src="/do-res/p5/p5.js"></script>
+      <script language="javascript" type="text/javascript" src="/do-res/p5/addons/p5.dom.js"></script>
+      <script language="javascript" type="text/javascript" src="/do-res/p5/gauge.js"></script>
+
+      <!-- For third-generation iPad with high-resolution Retina display: -->
+      <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/do-res/iidx-2.0.3/dist-2.0.3/components/brandkit/favicon/favicon-144px.png">
+      
+      <!-- For iPhone with high-resolution Retina display: -->
+      <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/do-res/iidx-2.0.3/dist-2.0.3/components/brandkit/favicon/favicon-114px.png">
+      
+      <!-- For first- and second-generation iPad: -->
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/do-res/iidx-2.0.3/dist-2.0.3/components/brandkit/favicon/favicon-72px.png">
+
+      <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+      <!--<link rel="apple-touch-icon-precomposed" href="../../../components/brandkit/favicon/favicon.png">-->
+
+      <link rel="icon" href="/do-res/iidx-2.0.3/dist-2.0.3/components/brandkit/favicon/favicon.ico">
+      <link href="/do-res/iidx-2.0.3/dist-2.0.3/css/iids.css" rel="stylesheet" type="text/css">
+      <link href="/do-res/iidx-2.0.3/dist-2.0.3/css/responsive.css" rel="stylesheet" type="text/css">
+
+      <link rel="stylesheet" type="text/css" href="/do-res/bower_components/bootstrap-css-only/css/bootstrap.min.css">
+      <!-- <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet"> -->
+      <!--[if lt IE 9]> <link id="theme-ie" href="../../../css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
+
+      <script src="/do-res/iidx-2.0.3/dist-2.0.3/components/modernizr/modernizr.js"></script>
+      
+      <style>
+        .nav .active a {
+            color: black !important; text-decoration: none !important; background-color: rgb(212, 212, 212) !important;
+        }
+        .nav li a:hover {
+            cursor: pointer !important;
+        }
+        .container { 
+            margin-left: 25px!important;
+        }
+        @media ( max-width : 1250px) {
+            .container { margin-left: auto; }
+        }
+      </style>
+
+      <script>
+        function displayMenu() {
+            var menuStyle = document.getElementById("menuBar").className;
+            if(menuStyle.indexOf("hideMenu") > -1) {
+                document.getElementById("menuBar").className = "primary-navbar nav-collapse showMenu";
+            } else if(menuStyle.indexOf("showMenu") > -1) {
+                document.getElementById("menuBar").className ="primary-navbar nav-collapse hideMenu";
+            }
+        }
+      </script>
+
+      <script src="/do-res/js/utils/nav.js"></script>
+      <script src="/do-res/js/utils/showMsg.js"></script>
+
+    </head>
+
+    <!-- START: header div -->
+    <div style='position: fixed; top: 0px; width: 100%; z-index: 1'>
+    
+    <div class="navbar navbar-static-top">
+        <div class="navbar-inner" >
+            <div class="navbar-inner">
+                <a class="brand" href="" style="padding-left:40px">
+                    <span class="ge-logo">
+                    </span>
+            <span>
+                Plant Dispatch Optimizer <small>
+                    <i>
+                        powered by</i>
+                    Digital Twin</small>
+            </span>
+                </a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse" onclick="displayMenu()">
+                    <span class="sr-only">
+                        Toggle navigation</span>
+                    <span class="icon-bar">
+                    </span>
+                    <span class="icon-bar">
+                    </span>
+                    <span class="icon-bar">
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div  class="primary-navbar nav-collapse hideMenu" id="menuBar">
+        <div class="container" ng-class="{'hidden' : isBase}" id="menu">
+            <ul class="nav navbar-nav" style="width: 100%;">
+                <li>
+                    <a id="navoverview" href="{% raw base_url or '/' %}" class="ng-binding" >
+                        Nav Overview</a>
+                </li>
+                <li>
+                    <a id="longterm" href="{% raw base_url %}/longtermplan" class="ng-binding" >
+                        Long Term Planning</a>
+                </li>
+                <!-- <li>
+                    <a id="dayaheadcapacity" href="dayaheadcapacity" class="ng-binding">
+                    Day Ahead Capacity</a>
+                    </li>
+                -->
+                <li>
+                    <a id="dayaheadcaptable" href="{% raw base_url %}/dayaheadcaptable" class="ng-binding">
+                        Day Ahead Capacity </a>
+                </li>
+                <li>
+                    <a id="bidenter" href="{% raw base_url %}/bidenter" class="ng-binding" >
+                        Enter Bid Results</a>
+                </li>
+                <li >
+                    <a id="dayaheadplan" href="{% raw base_url %}/dayaheadplan" class="ng-binding">
+                        Day Ahead Planning</a>
+                </li>
+                <li>
+                    <a id="execution" href="{% raw base_url %}/execution" class="ng-binding" >
+                        Execution</a>
+                </li>
+                <li>
+                    <a id="monitoring" href="{% raw base_url %}/monitoring" class="ng-binding" >
+                        Monitoring</a>
+                </li>
+                 <li id="managelink" style="display: none;">
+                    <a id="manage" href="{% raw base_url %}/manage" class="ng-binding" >
+                        Manage</a>
+                </li>
+                <li style="float: right;">
+                    <a id="logout" href="/auth/logout?next=/" class="ng-binding" >
+                        Logout</a>
+                </li>
+                <li style="float:right;">
+                    <a id="egd_hb" class="ng-bind">
+                        Polling</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- END: header div -->
+    </div>
+
+    {% block page_style %}<!-- page specific styles -->{% end %}
+
+    {% block main %}<p>Dispatch optimizer content...</p>{% end %}
+
+</html>
+

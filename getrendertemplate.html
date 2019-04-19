@@ -1,0 +1,631 @@
+{% extends "base.html" %}
+
+{% block page_title %}Monitoring Page{% end %}
+
+{% block page_style %}
+
+<style type="text/css">
+#monitoring {
+background-color: rgb(212, 212, 212) !important;
+}
+</style>
+
+{% end %}
+
+{% block main %}
+
+<body>
+  <div id="fadeBg" class="loading modal-backdrop fade in">
+    <img src="/do-res/image/balckImage.png" style="width: 100%; z-index: 1999;" />
+  </div>
+	<div id="myDiv" class="loading">
+		<span dclass="loading" style="position: fixed; left: 50%; top: 50%; z-index: 2000;">
+      <img src="/do-res/image/loading.gif" />
+		</span>
+	</div>
+	<br><br><br><br><br><br>
+
+  <div id="main-content" class="lcontent" style="display: none; margin-top: 0px;"> <!-- added -->
+     <div class="row" style="width: 100%">
+    	<section class="module span4 container2" style="height: 250px; margin-left: 4%;width: 30%;display: inline-block;
+      margin-bottom: 6px;">
+        <h4 class="instruct">Peak Bank Balance</h4>
+        <div style="margin-bottom: 10px;">
+          The chart to the right displays the historical view
+          of the Peak Bank MWHr balance. <br> Enter an average anticipated ambient
+          temperature to estimate future peaking capability.h <br>
+          <form action="cap_tamb_upload">
+            <input type="number" id="tamb_spend" name="tamb_spend" style="font-size: 14px;line-height: 20px;height: 26px;width: 50px;"
+            value="{% raw dataOut['avg_pk_fire_Tamb'] %}"> <p style="display:inline-block;vertical-align:middle;">&deg;{% raw dataOut['TEMP_SUFFIX'] %}</p>
+
+              <input type="button" name="lookupPeak_MWh" id="lookupPeak_MWh" class="btn" value="Update" style="margin-bottom: 10px;"><br>
+
+              {% raw dataOut['s7_output_html'] %}
+              <!--<p style="display:inline-block;vertical-align:middle;"><span id="Peak_MWh"></span> MWh</p>-->
+
+          </form>
+
+        </div>
+
+	    </section>
+    	<section class="module span9 container2" style="height: 250px; margin-left: 2%;width:62%;display: inline-block;
+      position: absolute;margin-bottom: 6px;">
+   			<div id="MWhCumPkBankChart"  style="width: 95%;"></div>
+    	</section>
+    </div>
+    <div class="row" style="width: 100%">
+    	<section class="module span4 container2" style="height: 216px; margin-left: 4%;width: 30%;display: inline-block;
+      margin-bottom: 6px;">
+        <h4 class="instruct">Cumulative MWh from Peak fire</h4>
+        <div style="margin-bottom: 10px;">
+          The chart to the right displays
+          the historical view of the net additional MWhr generated from
+          Peak Fire operation using SparkOption* credits.
+        </div>
+        <div id="netExtraOutputMWhMBTU"></div>
+
+	    </section>
+    	<section class="module span9 container2" style="height: 216px; margin-left: 2%;width:62%;display: inline-block;
+      position: absolute;margin-bottom: 6px;">
+   			<div id="MWhCumPkFireChart"  style="width: 95%;"></div>
+    	</section>
+    </div>
+    <div class="row" style="width: 100%">
+    	<section class="module span4 container2" style="height: 250px; margin-left: 4%;width:30%;display: inline-block;">
+        <h4 class="instruct">Cumulative MBTU from VTC</h4>
+        <div style="margin-bottom: 10px;">
+          The chart to the right displays the historical view of the
+          accumulated net extra fuel used during Variable Temperature Control
+          operation to accumulate SparkOptions*.
+        </div><br>
+
+	    </section>
+    	<section class="module span9 container2" style="height: 250px; margin-left: 2%;width: 62%;display: inline-block;
+      position: absolute;">
+	    	<div id="MBTUCumCPLChart" style="width: 95%;"></div>
+	    	<div style="float: right;">
+				<button id="exportCSV" class="btn" style="border: 1px solid #DDDDDD;padding: 4px;">Export all</button>
+			</div>
+    	</section>
+    </div>
+
+    <!-- Message Div -->
+    <div id="modal-saveMsg" class="modal hide fade in" aria-hidden="false"
+  		style="display: none; top: 5%; height: 100px; left: 100%; width: 20%;
+  		background-color: green; color: white; border-color: green;">
+  		<div class="modal-body" style="padding: 0px;padding-left: 8px;top: 5%;">
+        <div>
+          <i id="modal-icon" class="icon-ok-sign" style="font-size: 25px;"></i>
+  			</div>
+  			<div style="display: inline-block;" id="msgTemplate">
+  			</div>
+  		</div>
+  	</div>
+  </div> <!-- added -->
+
+</body>
+<script>
+
+
+
+
+  /**
+   * In order to synchronize tooltips and crosshairs, override the
+   * built-in events with handlers defined on the parent element.
+   */
+
+   $('#MWhCumPkBankChart, #MWhCumPkFireChart, #MBTUCumCPLChart').bind('mousemove touchmove touchstart', function(e) {
+      var chart,
+      points = [],
+      i,j,
+      secSeriesIndex = 1;
+
+      for (i = 0; i < Highcharts.charts.length; i++) {
+        chart = Highcharts.charts[i];
+        e = chart.pointer.normalize(e); // Find coordinates within the chart
+        num_series = chart.series.length;
+        //alert("Number of series " + num_series);
+        points = [];
+        for (j=0;j < num_series;j++) {
+          if (chart.series[j].searchPoint(e, true).series.visible){
+            points.push(chart.series[j].searchPoint(e, true)); // Get the hovered point
+          }
+        }
+        // if (points[0] && points[1]) {
+        if (points.length) {
+
+          if (!points[0].series.visible) {
+            points.shift();
+            secSeriesIndex = 0;
+          }
+
+          if (points.length > 1) {
+            if (!points[secSeriesIndex].series.visible) {
+              points.splice(secSeriesIndex,1);
+            }
+          }
+
+          if (points.length) {
+            chart.tooltip.refresh(points); // Show the tooltip
+            chart.xAxis[0].drawCrosshair(e, points[0]); // Show the crosshair
+          }
+        }
+      }
+   });
+
+
+
+
+//   $('#container').bind('mousemove touchmove touchstart', function(e) {
+//     var chart,
+//     points = [],
+//     i,j,
+//     secSeriesIndex = 1;
+//
+//     for (i = 0; i < Highcharts.charts.length; i++) {
+//         chart = Highcharts.charts[i];
+//         e = chart.pointer.normalize(e); // Find coordinates within the chart
+//         num_series = chart.series.length;
+//         points = [];
+//         for (j=0;j < num_series;j++) {
+//             points.push(chart.series[j].searchPoint(e, true)); // Get the hovered point
+//         }
+//
+//         if (points[0] && points[1]) {
+//             if (!points[0].series.visible) {
+//                 points.shift();
+//                 secSeriesIndex = 0;
+//             }
+//             if (!points[secSeriesIndex].series.visible) {
+//                 //points.splice(secSeriesIndex,1);
+//             }
+//             if (points.length) {
+//                 chart.tooltip.refresh(points); // Show the tooltip
+//                 chart.xAxis[0].drawCrosshair(e, points[0]); // Show the crosshair
+//             }
+//         }
+//     }
+// });
+
+//   $('#MWhCumPkBankChart, #MWhCumPkFireChart, #MBTUCumCPLChart').bind('mousemove touchmove touchstart', function(e) {
+//       var chart,
+//       points,
+//       i,
+//       secSeriesIndex = 1;
+//
+//       for (i = 0; i < Highcharts.charts.length; i++) {
+//           chart = Highcharts.charts[i];
+//           e = chart.pointer.normalize(e); // Find coordinates within the chart
+//           points = [chart.series[0].searchPoint(e, true), chart.series[1].searchPoint(e, true)]; // Get the hovered point
+//
+//           if (points[0] && points[1]) {
+//               if (!points[0].series.visible) {
+//                   points.shift();
+//                   secSeriesIndex = 0;
+//               }
+//               if (!points[secSeriesIndex].series.visible) {
+//                   points.splice(secSeriesIndex,1);
+//               }
+//               if (points.length) {
+//                   chart.tooltip.refresh(points); // Show the tooltip
+//                   chart.xAxis[0].drawCrosshair(e, points[0]); // Show the crosshair
+//               }
+//           }
+//       }
+// });
+
+    /**
+     * In order to synchronize tooltips and crosshairs, override the
+     * built-in events with handlers defined on the parent element.
+     */
+    // $('#MWhCumPkBankChart, #MWhCumPkFireChart, #MBTUCumCPLChart').bind('mousemove touchmove', function (e) {
+    //     var chart,
+    //         point,
+    //         i;
+    //
+    //     for (i = 0; i < Highcharts.charts.length; i = i + 1) {
+    //         chart = Highcharts.charts[i];
+    //         e = chart.pointer.normalize(e); // Find coordinates within the chart
+    //         point = chart.series[0].searchPoint(e, true); // Get the hovered point
+    //
+    //         if (point) {
+    //             point.onMouseOver(); // Show the hover marker
+    //             chart.tooltip.refresh(point); // Show the tooltip
+    //             chart.xAxis[0].drawCrosshair(e, point); // Show the crosshair
+    //         }
+    //     }
+    // });
+
+    /**
+     * Override the reset function, we don't need to hide the tooltips and crosshairs.
+     */
+    Highcharts.Pointer.prototype.reset = function () {
+        return undefined;
+    };
+    /**
+     * Create a global getSVG method that takes an array of charts as an argument
+     */
+    Highcharts.getSVG = function(charts) {
+        var svgArr = [],
+            top = 0,
+            width = 0;
+
+        $.each(charts, function(i, chart) {
+            var svg = chart.getSVG();
+            svg = svg.replace('<svg', '<g transform="translate(0,' + top + ')" ');
+            svg = svg.replace('</svg>', '</g>');
+            top += chart.chartHeight;
+            //width = Math.max(width, chart.chartWidth);
+            width = Math.max(width, 900);
+
+            svgArr.push(svg);
+        });
+
+        return '<svg height="'+ top +'" width="' + width + '" version="1.1" xmlns="http://www.w3.org/2000/svg">' + svgArr.join('') + '</svg>';
+    };
+
+    /**
+     * Create a global exportCharts method that takes an array of charts as an argument,
+     * and exporting options as the second argument
+     */
+    Highcharts.exportCharts = function(charts, options) {
+        var form
+            svg = Highcharts.getSVG(charts);
+
+        // merge the options
+        options = Highcharts.merge(Highcharts.getOptions().exporting, options);
+
+        // create the form
+        form = Highcharts.createElement('form', {
+            method: 'post',
+            action: options.url
+        }, {
+            display: 'none'
+        }, document.body);
+
+        // add the values
+        Highcharts.each(['filename', 'type', 'width', 'svg'], function(name) {
+            Highcharts.createElement('input', {
+                type: 'hidden',
+                name: name,
+                value: {
+                    filename: options.filename || 'Monitor',
+                    //type: options.type,
+                    type: 'pdf',
+                    width: options.width,
+                    svg: svg
+                }[name]
+            }, null, form);
+        });
+        //console.log(svg); return;
+        // submit
+        form.submit();
+
+        // clean up
+        form.parentNode.removeChild(form);
+    };
+
+    var chart1;
+    var chart2;
+    var chart3;
+    var AvgTamb = {% raw dataOut['avg_pk_fire_Tamb'] %};
+    var ampTemp = "@ Average Tamb " + Number(AvgTamb.toFixed(1));
+
+    $(function () {
+        $('#MWhCumPkBankChart')
+        .highcharts({
+        	chart: {
+        		zoomType: 'x',
+        		height : 200,
+            type: 'area'
+            },
+            title: {
+                text: 'Peak Bank in MWh',
+                x: -20 //center
+            },
+            subtitle: {
+                text: ampTemp
+            },
+            tooltip: {
+                shared: true,
+                valueDecimals: 1
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                crosshair: true,
+                type: 'datetime'
+            },
+            yAxis: {
+                title: {
+                    text: 'MWh'
+                }
+            },
+            legend: {
+                enabled:true
+            },
+            exporting: { enabled: false },
+            plotOptions: {
+              area: {
+                  lineColor: '#666666',
+                  lineWidth: 1,
+                  marker: {
+                      enabled: false,
+                      symbol: 'circle',
+                      radius: 2,
+                      states: {
+                          hover: {
+                              enabled: true
+                          }
+                      }
+                  }
+              }
+            },
+            series: [
+              {% raw dataOut['pkBnkSeries'] %}
+            ]
+        });
+        chart1 = $("#MWhCumPkBankChart").highcharts();
+    });
+
+    $(function () {
+        $('#MWhCumPkFireChart')
+        .highcharts({
+        	chart: {
+        		zoomType: 'x',
+        		height : 200,
+                type: 'area'
+            },
+        	title: {
+                text: 'Cumulative MWh from Peak Fire',
+                x: -20 //center
+            },
+            tooltip: {
+                shared: true,
+                valueDecimals: 1
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                crosshair: true,
+                type: 'datetime'
+            },
+            yAxis: {
+                title: {
+                    text: 'MWh'
+                }
+            },
+            plotOptions: {
+                area: {
+                    //pointStart: 1940,
+                    marker: {
+                        enabled: false,
+                        symbol: 'circle',
+                        radius: 2,
+                        states: {
+                            hover: {
+                                enabled: true
+                            }
+                        }
+                    }
+                }
+            },
+            legend: {
+                enabled:true
+            },
+            exporting: { enabled: false },
+            plotOptions: {
+              area: {
+                  stacking: 'normal',
+                  lineColor: '#666666',
+                  lineWidth: 1,
+                  marker: {
+                      enabled: false,
+                      symbol: 'circle',
+                      radius: 2,
+                      states: {
+                          hover: {
+                              enabled: true
+                          }
+                      }
+                  }
+              }
+            },
+            series: [
+              {% raw dataOut['cumMWhSeries'] %}
+            ]
+        });
+        chart2 = $("#MWhCumPkFireChart").highcharts();
+    });
+
+
+    $(function () {
+        $('#MBTUCumCPLChart')
+        .highcharts({
+        	chart: {
+        		zoomType: 'x',
+        		height : 200,
+                type: 'area'
+            },
+            title: {
+                text: 'Cumulative MBTU for VTC',
+                x: -20 //center
+            },
+            tooltip: {
+                shared: true,
+                valueDecimals: 1
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                crosshair: true,
+                type: 'datetime'
+            },
+            yAxis: {
+                title: {
+                    text: 'MBTU'
+                }
+            },
+            legend: {
+                enabled:true
+            },
+            exporting: { enabled: false },
+            plotOptions: {
+              area: {
+                  stacking: 'normal',
+                  lineColor: '#666666',
+                  lineWidth: 1,
+                  marker: {
+                      enabled: false,
+                      symbol: 'circle',
+                      radius: 2,
+                      states: {
+                          hover: {
+                              enabled: true
+                          }
+                      }
+                  }
+              }
+            },
+            series: [
+              {% raw dataOut['cumMBTUSeries'] %}
+            ]
+        });
+        chart3 = $("#MBTUCumCPLChart").highcharts();
+    });
+
+
+
+  $('#exportCSV').click(function() {
+      Highcharts.exportCharts([chart1, chart2, chart3]);
+  });
+
+  function setValueFromArray(id_str,robj) {
+    var i,
+        tmp_str,
+        statArray = [];
+    if (id_str in robj) {
+      statArray = robj[id_str];
+    }
+    for (i=0;i<statArray.length;i++) {
+      tmp_str = '#' + id_str + '_GT' + (i+1);
+      $(tmp_str).html(statArray[i].toFixed(1));
+    }
+  }
+
+  function addPoint(chartid,seriesNu,x,y){
+    // Add point to a chart
+    var chart = $(chartid).highcharts();
+
+    if (!('lastTime' in chart)) {
+      chart.lastTime = -1;
+    }
+
+    if(x >= chart.lastTime) {
+      var series = chart.series[seriesNu];
+      //series.addPoint([x,y], true, series.data.length > 60);
+      series.addPoint([x,y], true, false);
+      chart.lastTime = x;
+    }
+  }
+
+  function addDataArray(chartid,src_id,robj){
+    // Add array of points to a chart
+    if (src_id in robj) {
+      t = robj.msEpoch;
+      src_array = robj[src_id];
+      for (i=0; i<src_array.length;i++) {
+          addPoint(chartid,i,t,src_array[i]);
+      }
+    }
+  }
+
+
+  function setup_WS(){
+      // Note: You have to change the host var
+      // if your client runs on a different machine than the websocket server
+      var host = "ws://" + location.host + "{% raw base_url %}/monitoringaction";
+      var socket = new WebSocket(host);
+      // console.log("socket status: " + socket.readyState);
+      // event handlers for websocket
+      if(socket){
+          socket.onopen = function(){
+              //alert("connection opened....");
+          }
+          socket.onmessage = function(msg){
+              jsonString = msg.data;
+              robj = JSON.parse(jsonString);
+        			/*
+        			<div id="MWhCumPkFireChart"></div>
+        			<div id="MWhCumPkBankChart"></div>
+        			<div id="MBTUCumCPLChart"></div>
+        			*/
+              addDataArray('#MWhCumPkBankChart','RT_pk_MWHr_credit_avg',robj);
+    				  addDataArray('#MWhCumPkFireChart','CumMWh',robj);
+              addDataArray('#MBTUCumCPLChart','CumTI',robj);
+          }
+          socket.onclose = function(){
+              //alert("connection closed....");
+          }
+      } else {
+          console.log("invalid socket");
+      }
+  }
+
+
+
+    $(document).on('click', '#lookupPeak_MWh', function(e) {
+        //console.log("Tamb:::" + $("#tamb_spend").val());
+        robj = {in_Tamb: Number($("#tamb_spend").val())};
+        $.ajax({
+            url : "{% raw base_url %}/services/subsys7",
+            data : JSON.stringify(robj), //ur data to be sent to server
+            contentType : "application/json; charset=utf-8",
+            processData:false,
+            type : "POST",
+            cache : false,
+            success : function(resp) {
+              console.log("data sucess:::" + resp);
+              obj = JSON.parse(resp);
+              if ('rmessage' in obj) {
+                      showMessage(obj.rmessage, 'red', 3000);
+              }
+              if ('gmessage' in obj) {
+                      showMessage(obj.gmessage, 'green', 3000);
+              }
+              setValueFromArray('Peak_MWh',obj);
+            },
+            error : function(resp) {
+              showMessage("Doesn't look like the server is running", 'red', 3000);
+            }
+        });
+    });
+
+
+
+
+window.onload = function(){
+
+	document.title = "Monitoring Page";
+	var ratio = {% raw dataOut['ratio'] %};
+	$('#netExtraOutputMWhMBTU').html('<h3 style="font-size:18px;">Net extra output (MWh/MBTU): '+Number(ratio.toFixed(1))+'</h3>');
+    setup_WS();
+    setupStatusPolling('{% raw base_url %}');
+    setTimeout(hideLoader,200);
+}
+
+function hideLoader(){
+  $(".loading").fadeOut("slow");
+  $(".lcontent").fadeIn("slow");
+  chart1.reflow();
+  chart2.reflow();
+  chart3.reflow();
+  //document.getElementById('fadeBg').style.display = "none";
+  //document.getElementById('myDiv').style.display = "none";
+}
+</script>
+
+{% end %} <!-- block main -->

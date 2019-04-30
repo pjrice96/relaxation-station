@@ -1,2 +1,1 @@
-<process type>: <web>
-web: bundle exec rails server -p 8080
+web: python web.py

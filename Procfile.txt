@@ -1,2 +1,2 @@
-<process type>: <command>
+<process type>: <web>
 web: bundle exec rails server -p 8080

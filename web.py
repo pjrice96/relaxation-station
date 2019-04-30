@@ -566,7 +566,7 @@ application = tornado.web.Application([
 if __name__ == "__main__":
     # Start it all up
     # If WEB_SITE_PORT not redefined as an Environmental Variable us 9001
-    WEB_SITE_PORT = int(os.getenv('WEB_SITE_PORT', '8080'))
+    WEB_SITE_PORT = int(os.getenv('PORT', '8080'))
 
     application.listen(WEB_SITE_PORT)
     tornado.ioloop.IOLoop.current().start()

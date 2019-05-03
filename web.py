@@ -107,6 +107,27 @@ class Get_Auth_Render_Templated_Page_Handler(BaseHandler):
                     username = username,
                     dataOut = dataOut,
                     base_url = BASE_PATH)
+					
+class Index_Page_Handler(BaseHandler):
+    # Will redirect to login page if user isn't signed in
+    @tornado.web.authenticated
+    def get(self):
+        # Get user name from cookie
+        username = tornado.escape.xhtml_escape(self.current_user)
+        # Create object that will be injected into user page if using templating
+        dataOut = {"username":username}
+
+        # Add to the response header of the get request
+        #self.set_header("Cache-control", "public, max-age=0")
+
+        # Render a page means to do some preprocessing on it. In this case
+        # The information is in three pieces username, an object (dataOut) and
+        # the base_url are used to fill in the template of the
+        # getrenderexample.html page
+        self.render("index.html",
+                    username = username,
+                    dataOut = dataOut,
+                    base_url = BASE_PATH)
 
 class Get_Export_CSV_File_Handler(BaseHandler):
     # Example of returning a file other then a html in this case exporting a
@@ -553,7 +574,10 @@ application = tornado.web.Application([
     (p('services/give_data_from_form_return_page'),Post_Data_From_Form_Return_Page_Handler),
     (p('services/give_data_and_store_it'),Post_Data_And_Store_It_Handler),
     (p('services/give_data_from_file'),Post_And_Upload_A_File_Handler),
-    #
+    
+	
+	(p('index.html'),Index_Page_Handler),
+	#
     # Example of Websocket handlers
     # this don't have any authentication (be warned)
     (p('services/open_socket_example'),WebSocket_Example_Handler),

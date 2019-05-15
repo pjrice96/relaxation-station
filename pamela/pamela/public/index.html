@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="ocean.css?7">
+  <title>DB Test</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+.just-black {
+  background-color: #e1e1e1;
+}
+
+</style>
+</head>
+<body class="just-black">
+  <!--Register-->
+  <div id="register-user-block">
+     <h2>Register User</h2>
+     <input id="user-name-ru" type="text" class="textinput" name="user-name-ru"><label for="user-name-ru"> User name</label><br>
+     <input id="user-email-ru" type="text" class="textinput" name="user-email-ru"><label for="user-email-ru"> User email</label><br>
+     <input id="user-password-ru" type="password" class="textinput" name="user-password-ru"><label for="user-password-ru"> Password</label><br>
+     <input id="register-user" type="button" value="Register User">
+  </div>
+
+  <div id="sign-in-block">
+     <h2>Sign In</h2>
+     <input id="user-email-si" type="text" class="textinput" name="user-email-si"><label for="user-email-si"> User email</label><br>
+     <input id="user-password-si" type="password" class="textinput" name="user-password-si"><label for="user-password-si"> Password</label><br>
+     <input id="sign-in" type="button" value="Sign in">
+  </div>
+
+  <div id="sign-out-block">
+     <h2>Sign Out</h2>
+     <input id="sign-out" type="button" value="Sign out">
+  </div>
+
+  <div id="list-users-block">
+     <h2>List Users</h2>
+     <input id="list-users" type="button" value="List users"><br>
+     <div id="list-users-output">
+        <!-- Users are listed here -->
+     </div>
+  </div>
+
+  <div id="add-video-block">
+     <h2>Add Video</h2>
+     <input id="video-name-av" type="text" class="textinput" name="video-name-av"><label for="video-name-av"> Video name</label><br>
+     <input id="video-url-av" type="text" class="textinput" name="video-url-av"><label for="video-url-av"> Video url</label><br>
+     <input id="video-tags-av" type="text" class="textinput" name="video-tags-av"><label for="video-tags-av"> Video tags</label><br>
+     <input id="add-video" type="button" value="Add video">
+  </div>
+
+  <div id="remove-video-block">
+     <h2>Remove Video</h2>
+     <input id="video-id-rv" type="text" class="textinput" name="video-id-rv"><label for="video-id-rv"> Video id</label><br>
+     <input id="remove-video" type="button" value="Remove video">
+  </div>
+
+  <div id="list-videos-block">
+     <h2>List Videos</h2>
+     <input id="list-videos" type="button" value="List video"><br>
+     <div id="list-videos-output">
+        <!-- Video are listed here -->
+     </div>
+  </div>
+
+  <div id="add-map-block">
+    <h2>Add Map</h2>
+    <input id="video-id-am" type="text" class="textinput" name="video-id-am"><label for="video-id-am"> Video id</label><br>
+    <input id="user-id-am" type="text" class="textinput" name="user-id-am"><label for="user-id-am"> User id</label><br>
+    <input id="video-tags-am" type="text" class="textinput" name="video-tags-am"><label for="video-tags-am"> Video tags</label><br>
+    <input id="add-map" type="button" value="Add map">
+  </div>
+
+  <div id="update-map-video-tags-block">
+    <h2>Update Map Video Tags</h2>
+    <input id="video-id-um" type="text" class="textinput" name="video-id-um"><label for="video-id-um"> Video id</label><br>
+    <input id="user-id-um" type="text" class="textinput" name="user-id-um"><label for="user-id-um"> User id</label><br>
+    <input id="video-tags-um" type="text" class="textinput" name="video-tags-um"><label for="video-tags-um"> Video tags</label><br>
+    <input id="update-map-video-tags" type="button" value="Update map video tags">
+  </div>
+
+  <div id="remove-map-block">
+    <h2>Remove Map</h2>
+    <input id="video-id-rm" type="text" class="textinput" name="video-id-rm"><label for="video-id-rm"> Video id</label><br>
+    <input id="user-id-rm" type="text" class="textinput" name="user-id-rm"><label for="user-id-rm"> User id</label><br>
+    <input id="remove-map" type="button" value="Remove map">
+  </div>
+
+  <div id="list-maps-block">
+     <h2>List Maps</h2>
+     <input id="list-maps" type="button" value="List video"><br>
+     <div id="list-maps-output">
+        <!-- Maps are listed here -->
+     </div>
+  </div>
+
+
+  <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+
+  <script type="text/javascript">
+
+    $("#register-user").click(function(){
+      // Get the info from inputs
+      var user_name = $('#user-name-ru').val();
+      var user_email = $('#user-email-ru').val();
+      var user_password = $('#user-password-ru').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        user_name: user_name,
+        user_email: user_email,
+        user_password: user_password
+      };
+      console.log(out_obj);
+      jQuery.post("services/register_user",out_obj,function(data){
+        console.log("Registration results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#sign-in").click(function(){
+      // Get the info from inputs
+      var user_email = $('#user-email-si').val();
+      var user_password = $('#user-password-si').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        user_email: user_email,
+        user_password: user_password
+      };
+      jQuery.post("services/sign_in",out_obj,function(data){
+        console.log("Sign in results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#sign-out").click(function(){
+       // Get the info from inputs
+       // Registration info to send to the backend
+       var out_obj = {
+         nothing: "if you want it"
+       };
+       jQuery.post("services/sign_out",out_obj,function(data){
+         console.log("Sign out results");
+         console.log(data);
+         // results can drive things
+       }, 'json');
+    });
+
+    $("#list-users").click(function(){
+      // Get the info from inputs
+      // Registration info to send to the backend
+      var out_obj = {
+        some_data: "Can add data here",
+      };
+      jQuery.post("services/list_users",out_obj,function(data){
+        console.log("List users results");
+        console.log(data);
+        $("#list-users-output").html(data.users_list);
+      }, 'json');
+    });
+
+    $("#add-video").click(function(){
+      // Get the info from inputs
+      var video_name = $('#video-name-av').val();
+      var video_url = $('#video-url-av').val();
+      var video_tags = $('#video-tags-av').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        video_name: video_name,
+        video_url: video_url,
+        video_tags: video_tags
+      };
+      jQuery.post("services/add_video",out_obj,function(data){
+        console.log("Add video results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#remove-video").click(function(){
+      // Get the info from inputs
+      var video_id = $('#video-id-rv').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        video_id: video_id
+      };
+      jQuery.post("services/remove_video",out_obj,function(data){
+        console.log("Remove video results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#list-videos").click(function(){
+      // Get the info from inputs
+      // Registration info to send to the backend
+      var out_obj = {
+        some_data: "Can add data here"
+      };
+      jQuery.post("services/list_videos",out_obj,function(data){
+        console.log("List videos results");
+        console.log(data);
+        $("#list-videos-output").html(data.videos_list);
+      }, 'json');
+    });
+
+    $("#add-map").click(function(){
+      // Get the info from inputs
+      var video_id = $('#video-id-am').val();
+      var user_id = $('#user-id-am').val();
+      var video_tags = $('#video-tags-am').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        video_id: video_id,
+        video_tags: video_tags,
+        user_id: user_id
+      };
+      jQuery.post("services/add_map",out_obj,function(data){
+        console.log("Add map results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+
+     $("#update-map-video-tags").click(function(){
+       // Get the info from inputs
+       var video_id = $('#video-id-um').val();
+       var user_id = $('#user-id-um').val();
+       var video_tags = $('#video-tags-um').val();
+       // Registration info to send to the backend
+       var out_obj = {
+         video_id: video_id,
+         video_tags: video_tags,
+         user_id: user_id
+       };
+       jQuery.post("services/update_map_video_tags",out_obj,function(data){
+         console.log("Update tags results");
+         console.log(data);
+         // results can drive things
+       }, 'json');
+     });
+
+
+    $("#remove-map").click(function(){
+      // Get the info from inputs
+      var video_id = $('#video-id-rm').val();
+      var user_id = $('#user-id-rm').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        video_id: video_id,
+        user_id: user_id
+      };
+      jQuery.post("services/remove_map",out_obj,function(data){
+        console.log("Remove map results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#list-maps").click(function(){
+      // Get the info from inputs
+      // Registration info to send to the backend
+      var out_obj = {
+        some_data: "Can add data here",
+      };
+      jQuery.post("services/list_maps",out_obj,function(data){
+        console.log("List maps results");
+        console.log(data);
+        $("#list-maps-output").html(data.maps_list);
+      }, 'json');
+    });
+
+
+
+
+  </script>
+</body>
+</html>

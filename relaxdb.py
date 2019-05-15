@@ -144,7 +144,7 @@ class RelaxDB():
         cur.execute("SELECT 1 FROM pg_catalog.pg_database WHERE datname = 'relaxation-station'")
         exists = cur.fetchone()
         if not exists:
-            cur.execute("CREATE DATABASE relaxation-station;")
+            cur.execute("CREATE DATABASE 'relaxation-station';")
         cur.close()
         conn.commit()
         conn.close()

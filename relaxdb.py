@@ -141,7 +141,10 @@ class RelaxDB():
         con = psycopg2.connect(self.DATABASE_URL, sslmode='require')
         con.autocommit = True
         cur = con.cursor()
-        cur.execute("CREATE DATABASE IF NOT EXISTS relaxation-station;")
+        cur.execute("SELECT 1 FROM pg_catalog.pg_database WHERE datname = 'relaxation-station'")
+        exists = cur.fetchone()
+        if not exists:
+            cur.execute("CREATE DATABASE relaxation-station;")
         cur.close()
         conn.commit()
         conn.close()

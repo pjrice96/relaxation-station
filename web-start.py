@@ -4,7 +4,6 @@ import tornado.websocket
 import tornado.template
 from tornado.escape import *
 from objDictMap import Map
-from relaxdb import RelaxDB
 
 import csv
 import json
@@ -14,6 +13,10 @@ import sys
 import datetime
 import time
 import uuid
+
+from relaxdb import RelaxDB
+
+
 
 # ******************************************************************************
 # Setting up some globals ******************************************************
@@ -52,18 +55,7 @@ class BaseHandler(tornado.web.RequestHandler):
     # This base handler is an extension of the orginal request handler to add
     # some features
     def get_current_user(self):
-        return self.get_secure_cookie("user")
-
-    def get_current_role(self):
-        return self.get_secure_cookie("role")
-
-    def isWriteAllowed(self):
-        writeAllowed = ('"ADMIN"' in self.get_current_role()) or ('"WRITE"' in self.get_current_role())
-        return(writeAllowed)
-
-    def isAdminAllowed(self):
-        adminAllowed = ('"ADMIN"' in self.get_current_role())
-        return(adminAllowed)
+        return self.get_secure_cookie("user_id")
 
     def returnError(self,error,write):
         # Create a JSON object
@@ -109,27 +101,6 @@ class Get_Auth_Render_Templated_Page_Handler(BaseHandler):
                     username = username,
                     dataOut = dataOut,
                     base_url = BASE_PATH)
-					
-class Index_Page_Handler(BaseHandler):
-    # Will redirect to login page if user isn't signed in
-    @tornado.web.authenticated
-    def get(self):
-        # Get user name from cookie
-        username = tornado.escape.xhtml_escape(self.current_user)
-        # Create object that will be injected into user page if using templating
-        dataOut = {"username":username}
-
-        # Add to the response header of the get request
-        #self.set_header("Cache-control", "public, max-age=0")
-
-        # Render a page means to do some preprocessing on it. In this case
-        # The information is in three pieces username, an object (dataOut) and
-        # the base_url are used to fill in the template of the
-        # getrenderexample.html page
-        self.render("index.html",
-                    username = username,
-                    dataOut = dataOut,
-                    base_url = BASE_PATH)
 
 class Get_Export_CSV_File_Handler(BaseHandler):
     # Example of returning a file other then a html in this case exporting a
@@ -161,6 +132,8 @@ class Admin_Only_Page_Handler(BaseHandler):
             username = tornado.escape.xhtml_escape(self.current_user)
             self.render("getrenderplain.html", username = username)
 
+# ******************************************************************************
+# ******************************************************************************
 # POST For Relax
 
 """
@@ -286,6 +259,18 @@ class Add_Video_Handler(BaseHandler):
 
         self.write(json.dumps(resp_obj))
         self.finish()
+
+
+"""
+    (p('services/list_users'),List_Users_Handler),
+    (p('services/remove_video'),Remove_Video_Handler),
+    (p('services/list_videos'),List_Videos_Handler),
+    (p('services/list_maps'),List_Maps_Handler),
+    (p('services/add_map'),Add_Map_Handler),
+    (p('services/remove_map'),Remove_Map_Handler),
+    (p('services/update_map_video_tags'),Update_Map_Video_Tags_Handler),
+"""
+
 # ******************************************************************************
 # ******************************************************************************
 # POST Examples
@@ -651,6 +636,15 @@ class Main_Bootstrap_Page_Handler(BaseHandler):
         # Hand back from a get request with no fancy stuff
         self.render("index.html")
 
+class NotFoundHandler(tornado.web.RequestHandler):
+    def prepare(self):  # for all methods
+        raise tornado.web.HTTPError(
+            status_code=404,
+            reason="Invalid resource path."
+        )
+        self.render("./public/404.html")
+
+
 # Setup pointer between url S path and handlers
 
 def prefix_with_base(url):
@@ -669,7 +663,7 @@ settings = {
     "static_path":'./public',
     "debug":True,
     "cookie_secret": "A secret shared is not a secret",
-    "login_url": "/auth/login/"
+    "default_handler_class": NotFoundHandler
 }
 
 application = tornado.web.Application([
@@ -693,7 +687,7 @@ application = tornado.web.Application([
     # user
     (p('adminonly'),Admin_Only_Page_Handler),
     #
-	# POST requests for relax
+    # POST requests for relax
     (p('services/register_user'),Register_User_Handler),
     (p('services/sign_in'),Sign_In_Handler),
     (p('services/sign_out'),Sign_Out_Handler),
@@ -705,7 +699,8 @@ application = tornado.web.Application([
 #    (p('services/add_map'),Add_Map_Handler),
 #    (p('services/remove_map'),Remove_Map_Handler),
 #    (p('services/update_map_video_tags'),Update_Map_Video_Tags_Handler),
-    # Examples of POST requests
+
+
     (p('services/give_data_and_get_data'),Post_Based_On_JSON_Request_Handler),
     (p('services/give_data_if_allowed'),Post_Accept_JSON_Data_Based_On_Role_Handler),
     (p('services/give_data_from_form_if_allowed'),Post_Data_From_Form_Based_On_Role_Handler),
@@ -713,10 +708,7 @@ application = tornado.web.Application([
     (p('services/give_data_from_form_return_page'),Post_Data_From_Form_Return_Page_Handler),
     (p('services/give_data_and_store_it'),Post_Data_And_Store_It_Handler),
     (p('services/give_data_from_file'),Post_And_Upload_A_File_Handler),
-    
-	
-	(p('index.html'),Index_Page_Handler),
-	#
+    #
     # Example of Websocket handlers
     # this don't have any authentication (be warned)
     (p('services/open_socket_example'),WebSocket_Example_Handler),
@@ -729,7 +721,7 @@ application = tornado.web.Application([
 if __name__ == "__main__":
     # Start it all up
     # If WEB_SITE_PORT not redefined as an Environmental Variable us 9001
-    WEB_SITE_PORT = int(os.getenv('PORT', '8080'))
+    WEB_SITE_PORT = int(os.getenv('WEB_SITE_PORT', '9001'))
 
     application.listen(WEB_SITE_PORT)
     tornado.ioloop.IOLoop.current().start()

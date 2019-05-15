@@ -57,6 +57,13 @@
 	color: #ffc107;
 	}
 	
+	.popup-box{
+	display:none;
+	position:absolute;
+	top:0px;
+	left: 0px;
+	}
+	
 	  
     </style>
     <!-- Custom styles for this template -->
@@ -114,8 +121,8 @@
       <p class="lead text-muted text-center">This is a practice page to get used to Bootstrap and the coding process. </p>
 	  <!--img class="img-responsive" src="flowers.jpeg" alt="pretty" height="225" width="348"-->
 	 <p class="text-center">
-        <a href="log_in.html" class="btn btn-primary my-2">Log In</a>
-        <a href="Sign_In.html" class="btn btn-secondary my-2">Sign Up</a>
+        <a href="#" id="signin-popup" class="btn btn-primary my-2">Log In</a>
+        <a href="#" id="signup-popup" class="btn btn-secondary my-2">Sign Up</a>
 		<a href="Privacy_Policy.html" class="btn btn-primary my-2">Privacy Policy</a>
       </p>
     </div>
@@ -123,6 +130,7 @@
 	</div>
 	</div>	
 	</div>
+	
 	<hr>
 	
 	<!--div id="collapseTwo" class="collapse show" aria-labelledby="headingOne" data-parent="#SignIn">
@@ -384,34 +392,210 @@
     <p>New to Bootstrap? <a href="http://localhost:9001">Visit the homepage</a> or read our <a href="/docs/4.2/getting-started/introduction/">getting started guide</a>.</p>
   </div>
 </footer>
+
+<div class="popup-box" id="signup-box">
+<h2>Register User</h2>
+     <input id="user-name-ru" type="text" class="textinput" name="user-name-ru"><label for="user-name-ru"> User name</label><br>
+     <input id="user-email-ru" type="text" class="textinput" name="user-email-ru"><label for="user-email-ru"> User email</label><br>
+     <input id="user-password-ru" type="password" class="textinput" name="user-password-ru"><label for="user-password-ru"> Password</label><br>
+     <input id="register-user" type="button" value="Register User">
+</div>
+
+<div class="popup-box" id="signin-box">
+<h2>Sign In</h2>
+     <input id="user-email-si" type="text" class="textinput" name="user-email-si"><label for="user-email-si"> User email</label><br>
+     <input id="user-password-si" type="password" class="textinput" name="user-password-si"><label for="user-password-si"> Password</label><br>
+     <input id="sign-in" type="button" value="Sign in">
+</div>
+
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" jintegrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.2/dist/js/bootstrap.bundle.js"></script></body>
 </script>
 <script src="bootstrap-hover-dropdown.js"></script>
-<!--script>
-$(document).ready(function(){
-  $("#ButtonAttempt1").click(function(){
-    $.get("demo_test1.txt", function (data) {
-                    $("#div1").append(data);
-                });
-  });
-});
+<script type="text/javascript">
 
-$(document).ready(function(){
-  $("#ButtonAttempt2").click(function(){
-    $.get("demo_test2.txt", function (data) {
-                    $("#div2").append(data);
-                });
-  });
-});
+    $("#register-user").click(function(){
+      // Get the info from inputs
+      var user_name = $('#user-name-ru').val();
+      var user_email = $('#user-email-ru').val();
+      var user_password = $('#user-password-ru').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        user_name: user_name,
+        user_email: user_email,
+        user_password: user_password
+      };
+      console.log(out_obj);
+      jQuery.post("services/register_user",out_obj,function(data){
+        console.log("Registration results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
 
-$(document).ready(function(){
-  $("#ButtonAttempt3").click(function(){
-    $.get("demo_test3.txt", function (data) {
-                    $("#div3").append(data);
-                });
-  });
-});
+    $("#sign-in").click(function(){
+      // Get the info from inputs
+      var user_email = $('#user-email-si').val();
+      var user_password = $('#user-password-si').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        user_email: user_email,
+        user_password: user_password
+      };
+      jQuery.post("services/sign_in",out_obj,function(data){
+        console.log("Sign in results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
 
-</script-->
+    $("#sign-out").click(function(){
+       // Get the info from inputs
+       // Registration info to send to the backend
+       var out_obj = {
+         nothing: "if you want it"
+       };
+       jQuery.post("services/sign_out",out_obj,function(data){
+         console.log("Sign out results");
+         console.log(data);
+         // results can drive things
+       }, 'json');
+    });
+
+    $("#list-users").click(function(){
+      // Get the info from inputs
+      // Registration info to send to the backend
+      var out_obj = {
+        some_data: "Can add data here",
+      };
+      jQuery.post("services/list_users",out_obj,function(data){
+        console.log("List users results");
+        console.log(data);
+        $("#list-users-output").html(data.users_list);
+      }, 'json');
+    });
+
+    $("#add-video").click(function(){
+      // Get the info from inputs
+      var video_name = $('#video-name-av').val();
+      var video_url = $('#video-url-av').val();
+      var video_tags = $('#video-tags-av').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        video_name: video_name,
+        video_url: video_url,
+        video_tags: video_tags
+      };
+      jQuery.post("services/add_video",out_obj,function(data){
+        console.log("Add video results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#remove-video").click(function(){
+      // Get the info from inputs
+      var video_id = $('#video-id-rv').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        video_id: video_id
+      };
+      jQuery.post("services/remove_video",out_obj,function(data){
+        console.log("Remove video results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#list-videos").click(function(){
+      // Get the info from inputs
+      // Registration info to send to the backend
+      var out_obj = {
+        some_data: "Can add data here"
+      };
+      jQuery.post("services/list_videos",out_obj,function(data){
+        console.log("List videos results");
+        console.log(data);
+        $("#list-videos-output").html(data.videos_list);
+      }, 'json');
+    });
+
+    $("#add-map").click(function(){
+      // Get the info from inputs
+      var video_id = $('#video-id-am').val();
+      var user_id = $('#user-id-am').val();
+      var video_tags = $('#video-tags-am').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        video_id: video_id,
+        video_tags: video_tags,
+        user_id: user_id
+      };
+      jQuery.post("services/add_map",out_obj,function(data){
+        console.log("Add map results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+
+     $("#update-map-video-tags").click(function(){
+       // Get the info from inputs
+       var video_id = $('#video-id-um').val();
+       var user_id = $('#user-id-um').val();
+       var video_tags = $('#video-tags-um').val();
+       // Registration info to send to the backend
+       var out_obj = {
+         video_id: video_id,
+         video_tags: video_tags,
+         user_id: user_id
+       };
+       jQuery.post("services/update_map_video_tags",out_obj,function(data){
+         console.log("Update tags results");
+         console.log(data);
+         // results can drive things
+       }, 'json');
+     });
+
+
+    $("#remove-map").click(function(){
+      // Get the info from inputs
+      var video_id = $('#video-id-rm').val();
+      var user_id = $('#user-id-rm').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        video_id: video_id,
+        user_id: user_id
+      };
+      jQuery.post("services/remove_map",out_obj,function(data){
+        console.log("Remove map results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#list-maps").click(function(){
+      // Get the info from inputs
+      // Registration info to send to the backend
+      var out_obj = {
+        some_data: "Can add data here",
+      };
+      jQuery.post("services/list_maps",out_obj,function(data){
+        console.log("List maps results");
+        console.log(data);
+        $("#list-maps-output").html(data.maps_list);
+      }, 'json');
+    });
+		
+	$("#signin-popup").click(function(){
+	$("#signin-box").toggle();
+	});
+	
+	$("#signup-popup").click(function(){
+	$("#signup-box").toggle();
+	});
+
+
+  </script>
 </html>

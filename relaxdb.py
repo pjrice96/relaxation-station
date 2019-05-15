@@ -4,7 +4,6 @@ import psycopg2
 
 BUILD_DB = (
     """
-    CREATE DATABASE IF NOT EXISTS relaxation-station;
 	CREATE EXTENSION IF NOT EXISTS pgcrypto;
     """,
     """
@@ -130,13 +129,19 @@ DELETE_MAP_USER_VIDEO_ID = """
 
 class RelaxDB():
     def __init__(self):
-        self.DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://172.17.0.4:5432')
+        self.DATABASE_URL = os.getenv('DATABASE_URL')
         self.dbname = 'relaxation-station'
         self.user='postgres'
         self.password='mysecretpassword'
         self.is_open_flag = False
         self.conn = None
-
+		
+	def create_database(self):
+		con = psycopg2.connect(self.DATABASE_URL, sslmode='require')
+		con.autocommit = True
+		cur = con.cursor()
+		cur.execute("CREATE DATABASE IF NOT EXISTS relaxation-station;")
+		
     def open(self):
         self.conn = psycopg2.connect(self.DATABASE_URL,dbname=self.dbname,user=self.user,password=self.password)
         self.cur = self.conn.cursor()

@@ -4,7 +4,7 @@ import psycopg2
 
 BUILD_DB = (
     """
-	CREATE EXTENSION IF NOT EXISTS pgcrypto;
+    CREATE EXTENSION IF NOT EXISTS pgcrypto;
     """,
     """
     CREATE TABLE IF NOT EXISTS users (
@@ -135,13 +135,17 @@ class RelaxDB():
         self.password='mysecretpassword'
         self.is_open_flag = False
         self.conn = None
-		
-	def create_database(self):
-		con = psycopg2.connect(self.DATABASE_URL, sslmode='require')
-		con.autocommit = True
-		cur = con.cursor()
-		cur.execute("CREATE DATABASE IF NOT EXISTS relaxation-station;")
-		
+        
+        
+    def create_database(self):
+        con = psycopg2.connect(self.DATABASE_URL, sslmode='require')
+        con.autocommit = True
+        cur = con.cursor()
+        cur.execute("CREATE DATABASE IF NOT EXISTS relaxation-station;")
+        cur.close()
+        conn.commit()
+        conn.close()
+        
     def open(self):
         self.conn = psycopg2.connect(self.DATABASE_URL,dbname=self.dbname,user=self.user,password=self.password)
         self.cur = self.conn.cursor()

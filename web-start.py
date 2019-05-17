@@ -3,7 +3,7 @@ import tornado.web
 import tornado.websocket
 import tornado.template
 from tornado.escape import *
-from objDictMap import Map
+
 
 import csv
 import json
@@ -13,7 +13,7 @@ import sys
 import datetime
 import time
 import uuid
-
+from objDictMap import Map
 from relaxdb import RelaxDB
 
 

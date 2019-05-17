@@ -18,8 +18,8 @@ BUILD_DB = (
     CREATE TABLE IF NOT EXISTS videos (
         video_id SERIAL PRIMARY KEY,
         video_name VARCHAR(255) NOT NULL,
-        url TEXT NOT NULL,
-        flags TEXT
+        video_url TEXT NOT NULL,
+        video_flags TEXT
     )
     """,
     """ CREATE TABLE IF NOT EXISTS user_video_map (
@@ -137,20 +137,10 @@ class RelaxDB():
         self.conn = None
         
         
-    def create_database(self):
-        con = psycopg2.connect(self.DATABASE_URL, sslmode='require')
-        con.autocommit = True
-        cur = con.cursor()
-        cur.execute("SELECT 1 FROM pg_catalog.pg_database WHERE datname = 'relaxation-station'")
-        exists = cur.fetchone()
-        if not exists:
-            cur.execute('CREATE DATABASE "relaxation-station";')
-        cur.close()
-        conn.commit()
-        conn.close()
         
     def open(self):
-        self.conn = psycopg2.connect(self.DATABASE_URL,dbname=self.dbname,user=self.user,password=self.password)
+    
+        self.conn = psycopg2.connect(self.DATABASE_URL, sslmode='require')
         self.cur = self.conn.cursor()
         self.is_open_flag = True
 

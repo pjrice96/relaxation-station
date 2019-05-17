@@ -732,7 +732,9 @@ if __name__ == "__main__":
     WEB_SITE_PORT = int(os.getenv('PORT', '8080'))
     #building database if it does not exist
     relaxdb = RelaxDB()
-    relaxdb.create_database()
+    relaxdb.open()
+    relaxdb.build_db()
+    relaxdb.close()
 	
     application.listen(WEB_SITE_PORT)
     tornado.ioloop.IOLoop.current().start()

@@ -21,11 +21,13 @@ function row_creator (video_list){
         }
         if (g % 3 == 2){
             row_array.push(row_bottom_3);
+        }
     }
     row_array.join();
     return row_array;
     
 }
+
     
     
         

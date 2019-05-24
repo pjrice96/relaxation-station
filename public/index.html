@@ -84,56 +84,8 @@
       <p class="lead text-muted text-center">Welcome to the Relaxation Station, where the goal is to find the right videos without you falling down a YouTube hole</p>
 	 
      <p class="text-center">
-        <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="signin-box">Log In</button>
-<!-- Modal -->
-<div class="popup-box" id="signin-box" class ="modal fade" role="dialog">
-<div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Log In</h4>
-      </div>
-      <div class="modal-body">
-        <p>Please Log In to access videos</p>
-   <h2>Sign In</h2>
-     <input id="user-email-si" type="text" class="textinput" name="user-email-si"><label for="user-email-si"> User email</label><br>
-     <input id="user-password-si" type="password" class="textinput" name="user-password-si"><label for="user-password-si"> Password</label><br>
-     <input id="sign-in" type="button" value="Sign in">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-<!--        <a href="#" id="signin-popup" class="btn btn-primary my-2" data-toggle="modal">Log In</a> -->
-    <p class="text-center">
-<button type="button" class="btn btn-secondary my-2" data-toggle="modal" data-target="signup-box">Sign Up</button>
-
-<!-- Modal -->
-<div id="signup-popup" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Sign Up</h4>
-      </div>
-      <div class="modal-body">
-        <p>Create an Account to keep track of Videos</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-<!--        <a href="#" id="signup-popup" class="btn btn-secondary my-2">Sign Up</a> -->
-<p class="text-center">
+        <a href="#" id="signin-popup" class="btn btn-primary my-2">Log In</a>
+        <a href="#" id="signup-popup" class="btn btn-secondary my-2">Sign Up</a>
 		<a href="Privacy_Policy.html" class="btn btn-primary my-2">Privacy Policy</a>
     </div>
     </div>
@@ -550,11 +502,11 @@
     });
 		
 	$("#signin-popup").click(function(){
-	$("#signin-box").toggle();
+	$("#signin-box").modal();
 	});
 	
 	$("#signup-popup").click(function(){
-	$("#signup-box").toggle();
+	$("#signup-box").modal();
 	});
 
 

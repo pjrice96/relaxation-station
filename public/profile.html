@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Relaxation Station</title>
+
+    <!-- Bootstrap core CSS -->
+<link href="docs/4.2/dist/css/bootstrap.css" rel="stylesheet">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+	  
+	  .MyHeader{
+	  background-color: #fff;
+	  }
+	  
+	  .Centering{
+	  margin-right: auto;
+	  margin-left: auto;
+	  }
+	  
+	  .NewButton{
+	  -webkit-appearance: none;
+	  }
+	  .NewButton:[hover]{
+	  }
+	  
+	  .NewButton:not(:disabled):not(.disabled) {
+    cursor: pointer;
+	}
+	
+	.FontColor{
+	font: #fff;
+	}
+	
+	.BackgroundColor{
+	color: #6f42c1;
+	}
+	.BackGroundColor2{
+	color: #20c997;
+	}
+	.BackGroundColor3{
+	color: #ffc107;
+	}
+	
+	.popup-box{
+	display:none;
+	position:absolute;
+	top:0px;
+	left: 0px;
+	}
+    
+    .modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto;
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4);
+}
+
+    .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+}
+
+
+    .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+	
+	  
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="album.css" rel="stylesheet">
+  </head>
+  <body>
+
+<main role="main">
+<div class="accordion" id="accordionExample1">
+  <div class="card">
+    <div class="card-header MyHeader text-center" id="headingOne">
+	<h1 class="jumbotron-heading NewButton" type="button" data-toggle="collapse" data-target="#collapseOne">Relaxation Station</h1>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample1">
+      <div class="card-body">
+        <div class="container">
+      <p class="lead text-muted text-center">Personal Relaxation Station</p>
+	 
+     <p class="text-center">
+        <a href="#" id="add-video" class="btn btn-primary my-2">Add Video</a>
+        <a href="#" id="remove-video" class="btn btn-secondary my-2">Remove Video</a>
+		<a href="Privacy_Policy.html" class="btn btn-primary my-2">Privacy Policy</a>
+        <a href="#" id="sign_out" class="btn btn-secondary my-2">Sign Out</a>
+    </div>
+    </div>
+	</div>
+	</div>
+	</div>
+	
+<script src="row_creator.js"></script>
+<script type="text/javascript">
+
+        $("#sign-out").click(function(){
+       // Get the info from inputs
+       // Registration info to send to the backend
+       var out_obj = {
+         nothing: "if you want it"
+       };
+       jQuery.post("services/sign_out",out_obj,function(data){
+         console.log("Sign out results");
+         console.log(data);
+         // results can drive things
+       }, 'json');
+    });
+    
+        $("#add-video").click(function(){
+      // Get the info from inputs
+      var video_name = $('#video-name-av').val();
+      var video_url = $('#video-url-av').val();
+      var video_tags = $('#video-tags-av').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        video_name: video_name,
+        video_url: video_url,
+        video_tags: video_tags
+      };
+      jQuery.post("services/add_video",out_obj,function(data){
+        console.log("Add video results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#remove-video").click(function(){
+      // Get the info from inputs
+      var video_id = $('#video-id-rv').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        video_id: video_id
+      };
+      jQuery.post("services/remove_video",out_obj,function(data){
+        console.log("Remove video results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#list-videos").click(function(){
+      // Get the info from inputs
+      // Registration info to send to the backend
+      var out_obj = {
+        some_data: "Can add data here"
+      };
+      jQuery.post("services/list_videos",out_obj,function(data){
+        console.log("List videos results");
+        console.log(data);
+        $("#list-videos-output").html(data.videos_list);
+      }, 'json');
+    });
+
+
+  </script>
+</html>

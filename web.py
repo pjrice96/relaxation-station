@@ -256,9 +256,24 @@ class Sign_Out_Handler(BaseHandler):
         else:
             self.clear_cookie("user_id")
 
+class User_Profile_Handler(BaseHandler):
+    @tornado.web.authenticated
+    def post(self):
+        applog("User Profile Called")
+        resp_obj = Map()
+        resp_obj.handler = "User_Profile_Handler"
+        user_id = self.get_current_user()
+        relaxdb = RelaxDB()
+        relaxdb.open()
+        resp_obj.user_profile = relaxdb.get_user_profile(user_id)[0]
+        
+        resp_obj.call_result = "SUCCESS"
+        self.write(json.dumps(resp_obj))
+        self.finish()
 """
     (p('services/add_video'),Add_Video_Handler),
 """
+
 class Add_Video_Handler(BaseHandler):
     @tornado.web.authenticated
     def post(self):
@@ -697,6 +712,7 @@ application = tornado.web.Application([
     (p('services/register_user'),Register_User_Handler),
     (p('services/sign_in'),Sign_In_Handler),
     (p('services/sign_out'),Sign_Out_Handler),
+    (p('services/user_profile'), User_Profile_Handler),
 #    (p('services/list_users'),List_Users_Handler),
     (p('services/add_video'),Add_Video_Handler),
 #    (p('services/remove_video'),Remove_Video_Handler),

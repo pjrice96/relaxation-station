@@ -68,6 +68,11 @@ GET_USER_NAME = """
       FROM users
       WHERE user_id={user_id};
     """
+GET_USER_PROFILE = """
+    SELECT name, email
+      FROM users
+      WHERE user_id={user_id};
+    """
 DELETE_USER_ID = """
     DELETE
       FROM users
@@ -241,6 +246,10 @@ class RelaxDB():
 
     def get_user_name(self, user_id):
         return(self._get_one(GET_USER_NAME.format(user_id=user_id)))
+        
+
+    def get_user_profile(self):
+        return(self._get_rows(GET_USER_PROFILE))
 
     def get_all_users(self):
         return(self._get_rows(GET_ALL_USERS))

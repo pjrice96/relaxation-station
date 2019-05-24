@@ -338,7 +338,7 @@
   </div>
 </footer>
 
-<div class="modal popup-box text-center" id="signup-box">
+<div class="modal popup-box" id="signup-box">
 <div class="modal-content">
     <span class="close">&times;</span>
 
@@ -350,7 +350,7 @@
 </div>
 </div>
 
-<div class="modal popup-box text-center" id="signin-box">
+<div class="modal popup-box" id="signin-box">
 <div class="modal-content">
     <span class="close">&times;</span>
 
@@ -384,6 +384,7 @@
       jQuery.post("services/register_user",out_obj,function(data){
         console.log("Registration results");
         console.log(data);
+        $("#signup-box").modal("hide");
         // results can drive things
       }, 'json');
     });
@@ -403,6 +404,7 @@
         var video_list = data.video_list;
         var row_str = row_creator(video_list);
         $('#collapseFour').html(row_str);
+        $("#signin-box").modal("hide");
         // results can drive things
       }, 'json');
     });
@@ -552,6 +554,7 @@
 	$("#signup-popup").click(function(){
 	$("#signup-box").modal();
 	});
+
 
 
 

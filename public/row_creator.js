@@ -31,7 +31,7 @@ function row_creator (video_list){
         
 var card_top = '<div class="col-md-4"> <div class="card mb-4 shadow-sm"> <iframe width="348" height="225" src="';
 var card_middle = '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><div class="card-body"><p class="card-text">';
-car card_bottom = '</p><div class="d-flex justify-content-between align-items-center"><div class="btn-group"><button type="button" class="btn btn-sm btn-outline-secondary">Like</button><button type="button" class="btn btn-sm btn-outline-secondary">Dislike</button></div><small class="text-muted">9 mins</small></div></div></div></div>';
+var card_bottom = '</p><div class="d-flex justify-content-between align-items-center"><div class="btn-group"><button type="button" class="btn btn-sm btn-outline-secondary">Like</button><button type="button" class="btn btn-sm btn-outline-secondary">Dislike</button></div><small class="text-muted">9 mins</small></div></div></div></div>';
 
 function card_creator (video_list){
     var card_list = new Array();

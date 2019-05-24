@@ -366,7 +366,7 @@
       <script>window.jQuery || document.write('<script src="/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.2/dist/js/bootstrap.bundle.js"></script></body>
 </script>
 <!--<script src="bootstrap-hover-dropdown.js"></script> -->
-<script src="row_creator.js"></script>
+<script src="row_creator.js?version=1"></script>
 <script type="text/javascript">
 
     $("#register-user").click(function(){
@@ -402,9 +402,9 @@
         console.log("Sign in results");
         console.log(data);
         var video_list = data.video_list;
+        $("#signin-box").modal("hide");
         var row_str = row_creator(video_list);
         $('#collapseFour').html(row_str);
-        $("#signin-box").modal("hide");
         // results can drive things
       }, 'json');
     });

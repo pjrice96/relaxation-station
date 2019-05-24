@@ -63,6 +63,42 @@
 	top:0px;
 	left: 0px;
 	}
+    
+    .modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto;
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4);
+}
+
+    .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+}
+
+
+    .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
 	
 	  
     </style>
@@ -84,8 +120,8 @@
       <p class="lead text-muted text-center">Welcome to the Relaxation Station, where the goal is to find the right videos without you falling down a YouTube hole</p>
 	 
      <p class="text-center">
-        <a href="#" id="signin-popup" class="btn btn-primary my-2">Log In</a>
-        <a href="#" id="signup-popup" class="btn btn-secondary my-2">Sign Up</a>
+        <a href="#" id="signin-popup" class="modal btn btn-primary my-2">Log In</a>
+        <a href="#" id="signup-popup" class="modal btn btn-secondary my-2">Sign Up</a>
 		<a href="Privacy_Policy.html" class="btn btn-primary my-2">Privacy Policy</a>
     </div>
     </div>
@@ -302,19 +338,28 @@
   </div>
 </footer>
 
-<div class="popup-box" id="signup-box">
+<div class="modal popup-box text-center" id="signup-box">
+<div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Sign Up</p>
+
 <h2>Register User</h2>
      <input id="user-name-ru" type="text" class="textinput" name="user-name-ru"><label for="user-name-ru"> User name</label><br>
      <input id="user-email-ru" type="text" class="textinput" name="user-email-ru"><label for="user-email-ru"> User email</label><br>
      <input id="user-password-ru" type="password" class="textinput" name="user-password-ru"><label for="user-password-ru"> Password</label><br>
      <input id="register-user" type="button" value="Register User">
 </div>
+</div>
 
-<div class="popup-box" id="signin-box">
+<div class="modal popup-box text-center" id="signin-box">
+<div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Sign In</p>
 <h2>Sign In</h2>
      <input id="user-email-si" type="text" class="textinput" name="user-email-si"><label for="user-email-si"> User email</label><br>
      <input id="user-password-si" type="password" class="textinput" name="user-password-si"><label for="user-password-si"> Password</label><br>
      <input id="sign-in" type="button" value="Sign in">
+</div>
 </div>
 
 
@@ -508,6 +553,7 @@
 	$("#signup-popup").click(function(){
 	$("#signup-box").modal();
 	});
+
 
 
   </script>

@@ -70,59 +70,62 @@
     <link href="album.css" rel="stylesheet">
   </head>
   <body>
-    <!--header>
-  <div class="collapse bg-dark" id="navbarHeader">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-8 col-md-7 py-4">
-          <h4 class="text-white">About</h4>
-          <p class="text-muted">This is a practice page to get used to Bootstrap and the coding process for this kind of webpage.</p>
-        </div>
-        <div class="col-sm-4 offset-md-1 py-4">
-          <h4 class="text-white">Contact</h4>
-          <ul class="list-unstyled">
-            <li><a href="#" class="text-white">Follow on Twitter</a></li>
-            <li><a href="#" class="text-white">Like on Facebook</a></li>
-            <li><a href="#" class="text-white">Email me</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="navbar navbar-dark bg-dark text-center shadow-sm">
-    <div class="container d-flex justify-content-between">
-      <a href="#" class="navbar-brand d-flex align-items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2" focusable="false" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-        <strong>Relax Webpage Playground</strong>
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
-  </div>
-</header>-->
 
 <main role="main">
 <div class="accordion" id="accordionExample1">
   <div class="card">
     <div class="card-header MyHeader text-center" id="headingOne">
 	<h1 class="jumbotron-heading NewButton" type="button" data-toggle="collapse" data-target="#collapseOne">Relaxation Station</h1>
-      <!--<h5 class="Xmb-0">
-        <button class="btn Xbtn-link jumbotron-heading" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Relax Webpage Playground
-        </button>
-      </h5>-->
     </div>
 
     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample1">
       <div class="card-body">
         <div class="container">
-      <p class="lead text-muted text-center">This is a practice page to get used to Bootstrap and the coding process. </p>
-	  <!--img class="img-responsive" src="flowers.jpeg" alt="pretty" height="225" width="348"-->
+      <p class="lead text-muted text-center">Welcome to the Relaxation Station, where the goal is to find the right videos without you falling down a YouTube hole</p>
 	 <p class="text-center">
-        <a href="#" id="signin-popup" class="btn btn-primary my-2">Log In</a>
-        <a href="#" id="signup-popup" class="btn btn-secondary my-2">Sign Up</a>
+        <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#myModal">Log In</button>
+<!-- Modal -->
+<div id="signin-popup" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Log In</h4>
+      </div>
+      <div class="modal-body">
+        <p>Please Log In to access videos</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--        <a href="#" id="signin-popup" class="btn btn-primary my-2" data-toggle="modal">Log In</a> -->
+<button type="button" class="btn btn-secondary my-2" data-toggle="modal" data-target="#myModal">Sign Up</button>
+
+<!-- Modal -->
+<div id="signup-popup" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Sign Up</h4>
+      </div>
+      <div class="modal-body">
+        <p>Create an Account to keep track of Videos</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--        <a href="#" id="signup-popup" class="btn btn-secondary my-2">Sign Up</a> -->
 		<a href="Privacy_Policy.html" class="btn btn-primary my-2">Privacy Policy</a>
       </p>
     </div>
@@ -133,55 +136,6 @@
 	
 	<hr>
 	
-	<!--div id="collapseTwo" class="collapse show" aria-labelledby="headingOne" data-parent="#SignIn">
-      <div class="card-body">
-        <div class="container">
-	  <div class="text-center"
-	  </div-->
-	 
-<!--div class="accordion" id="accordionExample3">
-	<div class="card">
-		<div class="card-header text-center bg-dark text-white" id="headingOne"> 
-		<h1 class="jumbotron-heading NewButton" type="button" data-toggle="collapse" data-target="#collapseThree" >Sign Up</h1>
-		<hr>
-		</div>
-		
-	<div id="collapseThree" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample3">
-      <div class="card-body">
-        <div class="container">
-		<div class="text-center">
-	  <div id="div2">
-		<h2>Click to Sign Up</h2>
-		<div class="btn-group">
-<button id="ButtonAttempt2" class="btn dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">Sign Up</button>
-     <ul class="dropdown-menu">
-            <li><a tabindex="-1" href="#">My Account</a></li>
-            <li class="divider"></li>
-            <li><a tabindex="-1" href="#">Change Email</a></li>
-            <li><a tabindex="-1" href="#">Change Password</a></li>
-            <li class="divider"></li>
-            <li><a tabindex="-1" href="#">Logout</a></li>
-          </ul>
-     
-	  </div>
-	  </div>
-	  </div>
-	 </div>
-	 </div>
-	 </div>
-	 </div>
-	 </div-->
-  <!--<section class="jumbotron text-center">
-    <div class="container">
-      <h1 class="jumbotron-heading">Relax Webpage Playground</h1>
-      <p class="lead text-muted">This is a practice page to get used to Bootstrap and the coding process for this kind of webpage.</p>
-      <p>
-        <a href="#" class="btn btn-primary my-2">Have an account?</a>
-        <a href="#" class="btn btn-secondary my-2">Want to make an accoutnt?</a>
-      </p>
-    </div>
-  </section>-->
-
   <div class="album py-5 bg-light">
   <div class="accordion" id="accordionExample4">
   <div class="card">
@@ -238,22 +192,6 @@
               </div>
             </div>
           </div>
-          <!-- seeing if this changes view -->
-         <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <iframe width="348" height="225" src="https://www.youtube.com/embed/XyNlqQId-nk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <div class="card-body">
-              <p class="card-text">Here's a funny cat video because who doesn't like to laugh and cats have taken over the internet at this point anyway.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Like</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Dislike</button>
-                </div>
-                <small class="text-muted">9 mins</small>
-              </div>
-            </div>
-          </div>
-        </div>
 		</div>
 		</div>
 		</div>
@@ -392,10 +330,7 @@
   </div>
   </div>
   </div>
- <!--div id="div3">
- <h2>Lets see how this goes</h2>
- </div>
-<button id="ButtonAttempt3"> ButtonAttempt Try </button-->
+
 </main>
 
 <footer class="text-muted">
@@ -428,6 +363,7 @@
       <script>window.jQuery || document.write('<script src="/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.2/dist/js/bootstrap.bundle.js"></script></body>
 </script>
 <script src="bootstrap-hover-dropdown.js"></script>
+<script src="row_creator.js"></script>
 <script type="text/javascript">
 
     $("#register-user").click(function(){
@@ -461,6 +397,9 @@
       jQuery.post("services/sign_in",out_obj,function(data){
         console.log("Sign in results");
         console.log(data);
+        var video_list = data.video_list;
+        var row_str = row_creator(video_list);
+        $('#collapseFour').html(row_str);
         // results can drive things
       }, 'json');
     });

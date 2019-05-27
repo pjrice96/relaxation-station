@@ -126,7 +126,7 @@ class Index_Page_Handler(BaseHandler):
         # The information is in three pieces username, an object (dataOut) and
         # the base_url are used to fill in the template of the
         # getrenderexample.html page
-        self.render("index.html",
+        self.render("home_page.html",
                     username = username,
                     dataOut = dataOut,
                     base_url = BASE_PATH)
@@ -664,7 +664,7 @@ class AuthLogoutHandler(tornado.web.RequestHandler):
 class Main_Bootstrap_Page_Handler(BaseHandler):
     def get(self):
         # Hand back from a get request with no fancy stuff
-        self.render("index.html")
+        self.render("home_page.html")
 
 # Setup pointer between url S path and handlers
 
@@ -731,14 +731,14 @@ application = tornado.web.Application([
     (p('services/give_data_from_file'),Post_And_Upload_A_File_Handler),
     
 	
-	(p('index.html'),Index_Page_Handler),
+	(p('home_page.html'),	_Page_Handler),
 	#
     # Example of Websocket handlers
     # this don't have any authentication (be warned)
     (p('services/open_socket_example'),WebSocket_Example_Handler),
     #
     # Anything not handled above and static in nature (in a file) handled here
-    (r"/(.*)", tornado.web.StaticFileHandler, {"path": "./public", "default_filename": "index.html"})
+    (r"/(.*)", tornado.web.StaticFileHandler, {"path": "./public", "default_filename": "home_page.html"})
     ], **settings)
 
 

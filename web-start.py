@@ -634,7 +634,7 @@ class AuthLogoutHandler(tornado.web.RequestHandler):
 class Main_Bootstrap_Page_Handler(BaseHandler):
     def get(self):
         # Hand back from a get request with no fancy stuff
-        self.render("index.html")
+        self.render("home_page.html")
 
 class NotFoundHandler(tornado.web.RequestHandler):
     def prepare(self):  # for all methods
@@ -714,7 +714,7 @@ application = tornado.web.Application([
     (p('services/open_socket_example'),WebSocket_Example_Handler),
     #
     # Anything not handled above and static in nature (in a file) handled here
-    (r"/(.*)", tornado.web.StaticFileHandler, {"path": "./public", "default_filename": "index.html"})
+    (r"/(.*)", tornado.web.StaticFileHandler, {"path": "./public", "default_filename": "home_page.html"})
     ], **settings)
 
 

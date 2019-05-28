@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Relaxation Station</title>
+
+    <!-- Bootstrap core CSS -->
+<link href="docs/4.2/dist/css/bootstrap.css" rel="stylesheet">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+	  
+	  .MyHeader{
+	  background-color: #fff;
+	  }
+	  
+	  .Centering{
+	  margin-right: auto;
+	  margin-left: auto;
+	  }
+	  
+	  .NewButton{
+	  -webkit-appearance: none;
+	  }
+	  .NewButton:[hover]{
+	  }
+	  
+	  .NewButton:not(:disabled):not(.disabled) {
+    cursor: pointer;
+	}
+	
+	.FontColor{
+	font: #fff;
+	}
+	
+	.BackgroundColor{
+	color: #6f42c1;
+	}
+	.BackGroundColor2{
+	color: #20c997;
+	}
+	.BackGroundColor3{
+	color: #ffc107;
+	}
+	
+	.popup-box{
+	display:none;
+	position:absolute;
+	top:0px;
+	left: 0px;
+	}
+    
+    .modal {
+    display: none; 
+    position: fixed; 
+    z-index: 2000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto;
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4);
+}
+
+    .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+}
+
+
+    .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+	
+	  
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="album.css" rel="stylesheet">
+  </head>
+  <body>
+
+<main role="main">
+<div class="accordion" id="accordionExample1">
+  <div class="card">
+    <div class="card-header MyHeader text-center" id="headingOne">
+	<h1 class="jumbotron-heading NewButton" type="button" data-toggle="collapse" data-target="#collapseOne">Relaxation Station</h1>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample1">
+      <div class="card-body">
+        <div class="container">
+      <p class="lead text-muted text-center">Welcome to the Relaxation Station, where the goal is to find the right videos without you falling down a YouTube hole</p>
+	 
+     <p class="text-center">
+        <a href="#" id="signin-popup" class="btn btn-primary my-2">Log In</a>
+        <a href="#" id="signup-popup" class="btn btn-secondary my-2">Sign Up</a>
+		<a href="Privacy_Policy.html" class="btn btn-primary my-2">Privacy Policy</a>
+    </div>
+    </div>
+	</div>
+	</div>	
+	</div>
+	
+	<hr>
+	
+  <div class="album py-5 bg-light">
+  <div class="accordion" id="accordionExample4">
+  <div class="card">
+    <div class="card-header BackgroundColor MyHeader text-center" id="headingOne">
+	<h1 class="jumbotron-heading bold NewButton" type="button" data-toggle="collapse" data-target="#collapseFour">Example Videos</h1>
+	<div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample4">
+	
+      <div class="card-body">
+        <div class="container">
+		
+      <div class="container">	
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+		  <iframe width="348" height="225" src="https://www.youtube.com/embed/Bm5iA4Zupek?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+            <div class="card-body">
+              <p class="card-text">You can add comments on what you think of the video</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+		  <iframe width="348" height="225" src="https://www.youtube.com/embed/lFcSrYw-ARY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="card-body">
+              <p class="card-text">There are many options for videos to choose from</p>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <iframe width="348" height="225" src="https://www.youtube.com/embed/XyNlqQId-nk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="card-body">
+              <p class="card-text">Funny can be relaxing too </p>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		
+	<div class="accordion" id="accordionExample5">
+  <div class="card">
+    <div class="card-header BackGroundColor2 MyHeader text-center" id="headingTwo">
+	<h1 class="jumbotron-heading bold NewButton" type="button" data-toggle="collapse" data-target="#collapseFive">More Examples</h1>
+	<div id="collapseFive" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample5">
+	
+      <div class="card-body">
+        <div class="container">
+		
+	<div class="container">	
+      <div class="row">	
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+           <iframe width="348" height="225" src="https://www.youtube.com/embed/mFlrc16xjik" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="card-body">
+              <p class="card-text">Anything you desire will work!</p>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+           <iframe width="348" height="225" src="https://www.youtube.com/embed/99lIIjKsB0g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="card-body">
+              <p class="card-text">You can add exercise videos too</p>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+           <iframe width="348" height="225" src="https://www.youtube.com/embed/jX6kn9_U8qk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="card-body">
+              <p class="card-text">The possibilities are endless</p>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+
+<div class="accordion" id="accordionExample6">
+  <div class="card">
+    <div class="card-header BackGroundColor3 bold MyHeader text-center" id="headingThree">
+	<h1 class="jumbotron-heading NewButton" type="button" data-toggle="collapse" data-target="#collapseSix">Even More Options!</h1>
+	<div id="collapseSix" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample6">
+	
+      <div class="card-body">
+        <div class="container">
+		
+	<div class="container">	
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+           <iframe width="348" height="225" src="https://www.youtube.com/embed/5BBpKiEy_OE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="card-body">
+              <p class="card-text">Let us fill the space necessary because there are only so many relaxation videos on the internet...</p>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+           <iframe width="348" height="225" src="https://www.youtube.com/embed/mS0xfubmSqM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="card-body">
+              <p class="card-text">funky and fun classical music</p>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+           <iframe width="348" height="225" src="https://www.youtube.com/embed/vjRiLKSPbqc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="card-body">
+              <p class="card-text">absolutely beautiful</p>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+
+</main>
+
+<footer class="text-muted">
+  <div class="container text-right">
+    <p>Pamela Rice, Department of Electrical Engineering Senior Project, 2019</p>
+  </div>
+</footer>
+
+<div class="modal popup-box" id="signup-box">
+<div class="modal-content">
+    <span class="close">&times;</span>
+
+<h2>Register User</h2>
+     <input id="user-name-ru" type="text" class="textinput" name="user-name-ru"><label for="user-name-ru"> User name</label><br>
+     <input id="user-email-ru" type="text" class="textinput" name="user-email-ru"><label for="user-email-ru"> User email</label><br>
+     <input id="user-password-ru" type="password" class="textinput" name="user-password-ru"><label for="user-password-ru"> Password</label><br>
+     <input id="register-user" type="button" value="Register User">
+</div>
+</div>
+
+<div class="modal popup-box" id="signin-box">
+<div class="modal-content">
+    <span class="close">&times;</span>
+
+<h2>Sign In</h2>
+     <input id="user-email-si" type="text" class="textinput" name="user-email-si"><label for="user-email-si"> User email</label><br>
+     <input id="user-password-si" type="password" class="textinput" name="user-password-si"><label for="user-password-si"> Password</label><br>
+     <input id="sign-in" type="button" value="Sign in">
+</div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" jintegrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script>window.jQuery || document.write('<script src="/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.2/dist/js/bootstrap.bundle.js"></script></body>
+</script>
+<!--<script src="bootstrap-hover-dropdown.js"></script> -->
+<script src="row_creator.js?version=1"></script>
+<script type="text/javascript">
+
+    $("#register-user").click(function(){
+      // Get the info from inputs
+      var user_name = $('#user-name-ru').val();
+      var user_email = $('#user-email-ru').val();
+      var user_password = $('#user-password-ru').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        user_name: user_name,
+        user_email: user_email,
+        user_password: user_password
+      };
+      console.log(out_obj);
+      jQuery.post("services/register_user",out_obj,function(data){
+        console.log("Registration results");
+        console.log(data);
+        $("#signup-box").modal("hide");
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#sign-in").click(function(){
+      // Get the info from inputs
+      var user_email = $('#user-email-si').val();
+      var user_password = $('#user-password-si').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        user_email: user_email,
+        user_password: user_password
+      };
+      jQuery.post("services/sign_in",out_obj,function(data){
+        console.log("Sign in results");
+        console.log(data);
+        var video_list = data.video_list;
+        $("#signin-box").modal("hide");
+        var row_str = row_creator(video_list);
+        $('#collapseFour').html(row_str);
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#sign-out").click(function(){
+       // Get the info from inputs
+       // Registration info to send to the backend
+       var out_obj = {
+         nothing: "if you want it"
+       };
+       jQuery.post("services/sign_out",out_obj,function(data){
+         console.log("Sign out results");
+         console.log(data);
+         // results can drive things
+       }, 'json');
+    });
+
+    $("#list-users").click(function(){
+      // Get the info from inputs
+      // Registration info to send to the backend
+      var out_obj = {
+        some_data: "Can add data here",
+      };
+      jQuery.post("services/list_users",out_obj,function(data){
+        console.log("List users results");
+        console.log(data);
+        $("#list-users-output").html(data.users_list);
+      }, 'json');
+    });
+
+    $("#add-video").click(function(){
+      // Get the info from inputs
+      var video_name = $('#video-name-av').val();
+      var video_url = $('#video-url-av').val();
+      var video_tags = $('#video-tags-av').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        video_name: video_name,
+        video_url: video_url,
+        video_tags: video_tags
+      };
+      jQuery.post("services/add_video",out_obj,function(data){
+        console.log("Add video results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#remove-video").click(function(){
+      // Get the info from inputs
+      var video_id = $('#video-id-rv').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        video_id: video_id
+      };
+      jQuery.post("services/remove_video",out_obj,function(data){
+        console.log("Remove video results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#list-videos").click(function(){
+      // Get the info from inputs
+      // Registration info to send to the backend
+      var out_obj = {
+        some_data: "Can add data here"
+      };
+      jQuery.post("services/list_videos",out_obj,function(data){
+        console.log("List videos results");
+        console.log(data);
+        $("#list-videos-output").html(data.videos_list);
+      }, 'json');
+    });
+
+    $("#add-map").click(function(){
+      // Get the info from inputs
+      var video_id = $('#video-id-am').val();
+      var user_id = $('#user-id-am').val();
+      var video_tags = $('#video-tags-am').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        video_id: video_id,
+        video_tags: video_tags,
+        user_id: user_id
+      };
+      jQuery.post("services/add_map",out_obj,function(data){
+        console.log("Add map results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+
+     $("#update-map-video-tags").click(function(){
+       // Get the info from inputs
+       var video_id = $('#video-id-um').val();
+       var user_id = $('#user-id-um').val();
+       var video_tags = $('#video-tags-um').val();
+       // Registration info to send to the backend
+       var out_obj = {
+         video_id: video_id,
+         video_tags: video_tags,
+         user_id: user_id
+       };
+       jQuery.post("services/update_map_video_tags",out_obj,function(data){
+         console.log("Update tags results");
+         console.log(data);
+         // results can drive things
+       }, 'json');
+     });
+
+
+    $("#remove-map").click(function(){
+      // Get the info from inputs
+      var video_id = $('#video-id-rm').val();
+      var user_id = $('#user-id-rm').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        video_id: video_id,
+        user_id: user_id
+      };
+      jQuery.post("services/remove_map",out_obj,function(data){
+        console.log("Remove map results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#list-maps").click(function(){
+      // Get the info from inputs
+      // Registration info to send to the backend
+      var out_obj = {
+        some_data: "Can add data here",
+      };
+      jQuery.post("services/list_maps",out_obj,function(data){
+        console.log("List maps results");
+        console.log(data);
+        $("#list-maps-output").html(data.maps_list);
+      }, 'json');
+    });
+		
+	$("#signin-popup").click(function(){
+	$("#signin-box").modal();
+	});
+	
+	$("#signup-popup").click(function(){
+	$("#signup-box").modal();
+	});
+
+
+
+
+  </script>
+</html>

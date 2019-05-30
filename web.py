@@ -731,7 +731,7 @@ application = tornado.web.Application([
     (p('services/give_data_from_file'),Post_And_Upload_A_File_Handler),
     
 	
-	(p('index.html'),	_Page_Handler),
+	(p('index.html'),	Index_Page_Handler),
 	#
     # Example of Websocket handlers
     # this don't have any authentication (be warned)
@@ -1489,7 +1489,7 @@ application = tornado.web.Application([
     (p('services/give_data_from_file'),Post_And_Upload_A_File_Handler),
     
 	
-	(p('index.html'),	_Page_Handler),
+	(p('index.html'),	Index_Page_Handler),
 	#
     # Example of Websocket handlers
     # this don't have any authentication (be warned)

@@ -1500,17 +1500,3 @@ application = tornado.web.Application([
     ], **settings)
 
 
-if __name__ == "__main__":
-    # Start it all up
-    # If WEB_SITE_PORT not redefined as an Environmental Variable us 9001
-    WEB_SITE_PORT = int(os.getenv('PORT', '8080'))
-    #building database if it does not exist
-    relaxdb = RelaxDB()
-    relaxdb.open()
-    relaxdb.build_db()
-    relaxdb.close()
-	
-    application.listen(WEB_SITE_PORT)
-    tornado.ioloop.IOLoop.current().start()
-	
->>>>>>> 3f133e65533e6a3c4f60f69a58d8955aa3b19937

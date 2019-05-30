@@ -1,4 +1,5 @@
-#<<<<<<< HEAD
+import pandas as pd
+<<<<<<< HEAD
 import tornado.ioloop
 import tornado.web
 import tornado.websocket

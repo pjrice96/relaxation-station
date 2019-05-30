@@ -21,6 +21,163 @@ Department of Electrical Computer Biomedical Engineering Department of Union Col
  information collected regarding YouTube videos watched or saved by users will not be sold or given to outside
  parties for any purposes.</p>
 <p class="text-center">
-        <a href="index.html" class="btn btn-primary my-2">Return to Home Page</a>
+        <a href="#" id ="signin-popup" class="btn btn-primary my-2">Log In</a>
+        <a href="#" id ="signup-popup" class="btn btn-secondary my-2">Sign Up</a>
 </p>
+        
+<div class="modal popup-box" id="signin-box">
+<div class="modal-content">
+    <span class="close">&times;</span>
+
+<h2>Sign In</h2>
+     <input id="user-email-si" type="text" class="textinput" name="user-email-si"><label for="user-email-si"> User email</label><br>
+     <input id="user-password-si" type="password" class="textinput" name="user-password-si"><label for="user-password-si"> Password</label><br>
+     <input id="sign-in" type="button" value="Sign in">
+</div>
+</div>
+
+
+<div class="modal popup-box" id="signup-box">
+<div class="modal-content">
+    <span class="close">&times;</span>
+
+<h2>Register User</h2>
+     <input id="user-name-ru" type="text" class="textinput" name="user-name-ru"><label for="user-name-ru"> User name</label><br>
+     <input id="user-email-ru" type="text" class="textinput" name="user-email-ru"><label for="user-email-ru"> User email</label><br>
+     <input id="user-password-ru" type="password" class="textinput" name="user-password-ru"><label for="user-password-ru"> Password</label><br>
+     <input id="register-user" type="button" value="Register User">
+</div>
+</div>
 </body>
+
+<script src="row_creator.js?version=1"></script>
+<script type="text/javascript">
+
+    $("#register-user").click(function(){
+      // Get the info from inputs
+      var user_name = $('#user-name-ru').val();
+      var user_email = $('#user-email-ru').val();
+      var user_password = $('#user-password-ru').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        user_name: user_name,
+        user_email: user_email,
+        user_password: user_password
+      };
+      console.log(out_obj);
+      jQuery.post("services/register_user",out_obj,function(data){
+        console.log("Registration results");
+        console.log(data);
+        $("#signup-box").modal("hide");
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#sign-in").click(function(){
+      // Get the info from inputs
+      var user_email = $('#user-email-si').val();
+      var user_password = $('#user-password-si').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        user_email: user_email,
+        user_password: user_password
+      };
+      jQuery.post("services/sign_in",out_obj,function(data){
+        console.log("Sign in results");
+        console.log(data);
+        var video_list = data.video_list;
+        $("#signin-box").modal("hide");
+        var row_str = row_creator(video_list);
+        $('#collapseFour').html(row_str);
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#sign-out").click(function(){
+       // Get the info from inputs
+       // Registration info to send to the backend
+       var out_obj = {
+         nothing: "if you want it"
+       };
+       jQuery.post("services/sign_out",out_obj,function(data){
+         console.log("Sign out results");
+         console.log(data);
+         // results can drive things
+       }, 'json');
+    });
+
+    $("#list-users").click(function(){
+      // Get the info from inputs
+      // Registration info to send to the backend
+      var out_obj = {
+        some_data: "Can add data here",
+      };
+      jQuery.post("services/list_users",out_obj,function(data){
+        console.log("List users results");
+        console.log(data);
+        $("#list-users-output").html(data.users_list);
+      }, 'json');
+    });
+
+
+    $("#add-map").click(function(){
+      // Get the info from inputs
+      var video_id = $('#video-id-am').val();
+      var user_id = $('#user-id-am').val();
+      var video_tags = $('#video-tags-am').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        video_id: video_id,
+        video_tags: video_tags,
+        user_id: user_id
+      };
+      jQuery.post("services/add_map",out_obj,function(data){
+        console.log("Add map results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+
+
+    $("#remove-map").click(function(){
+      // Get the info from inputs
+      var video_id = $('#video-id-rm').val();
+      var user_id = $('#user-id-rm').val();
+      // Registration info to send to the backend
+      var out_obj = {
+        video_id: video_id,
+        user_id: user_id
+      };
+      jQuery.post("services/remove_map",out_obj,function(data){
+        console.log("Remove map results");
+        console.log(data);
+        // results can drive things
+      }, 'json');
+    });
+
+    $("#list-maps").click(function(){
+      // Get the info from inputs
+      // Registration info to send to the backend
+      var out_obj = {
+        some_data: "Can add data here",
+      };
+      jQuery.post("services/list_maps",out_obj,function(data){
+        console.log("List maps results");
+        console.log(data);
+        $("#list-maps-output").html(data.maps_list);
+      }, 'json');
+    });
+		
+	$("#signin-popup").click(function(){
+	$("#signin-box").modal();
+	});
+	
+	$("#signup-popup").click(function(){
+	$("#signup-box").modal();
+	});
+
+
+
+
+  </script>

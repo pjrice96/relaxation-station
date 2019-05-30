@@ -55,4 +55,3 @@ function card_creator (video_list){
         
         
         
-        //videos.video_id, videos.video_name, videos.video_url, user_video_map.video_tags

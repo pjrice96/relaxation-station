@@ -565,7 +565,7 @@ class AuthLoginHandler(BaseHandler):
         applog("Login screen requested\n")
         errormessage = self.get_argument("error", "")
         next_url = self.get_argument("next", "")
-        self.render("login.html", errormessage=errormessage, next_url=next_url, base_url=BASE_PATH)
+        self.render("log_in.html", errormessage=errormessage, next_url=next_url, base_url=BASE_PATH)
 
     def check_permission(self, password, username):
         # Yes, this needs to be fixed
@@ -1293,7 +1293,7 @@ class AuthLoginHandler(BaseHandler):
         applog("Login screen requested\n")
         errormessage = self.get_argument("error", "")
         next_url = self.get_argument("next", "")
-        self.render("login.html", errormessage=errormessage, next_url=next_url, base_url=BASE_PATH)
+        self.render("log_in.html", errormessage=errormessage, next_url=next_url, base_url=BASE_PATH)
 
     def check_permission(self, password, username):
         # Yes, this needs to be fixed
